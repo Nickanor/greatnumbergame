@@ -14,6 +14,15 @@ def index():
     return render_template('index.html')
 
 @app.route('/check', methods=['POST'])
+def check():
+    guess = int(request.form['guess'])
+    if guess > session['random']:
+        print "Too High!"
+    elif guess < session['random']:
+        print "Too Low!"
+    elif guess == session['random']:
+        print "Perfect!"
+    return redirect('/')
 
 
 app.run(debug=True)

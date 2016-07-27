@@ -1,4 +1,4 @@
-from flask import Flask, session, render_template, request, redirect
+from flask import Flask, session, render_template, request, redirect, flash
 import random
 
 app=Flask(__name__)
@@ -17,11 +17,16 @@ def index():
 def check():
     guess = int(request.form['guess'])
     if guess > session['random']:
-        print "Too High!"
+        flash("Too High!", 'error')
     elif guess < session['random']:
-        print "Too Low!"
+        flash("Too Low!", 'error')
     elif guess == session['random']:
-        print "Perfect!"
+        flash("Perfect!", 'success')
+    return redirect('/')
+
+@app.route('/reset')
+def reset():
+    session.pop('random')
     return redirect('/')
 
 

@@ -5,9 +5,26 @@
   <title>Great Number Game</title>
 </head>
 <body>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for category, message in messages %}
+      {% if category == 'error'%}
+        <p>{{message}}</p>
+      {% elif category == 'success' %}
+        <p>{{message}}</p>
+        <form action="/reset">
+          <button type='submit'>Play Again!</button>
+        </form>
+        {% endif %}
+    {% endfor %}
+    </ul>
+  {% endif %}
+  {% endwith %}
   <form action="/check" method="post">
     <input type="number" name="guess" placeholder="Guess the number!"/>
     <button type="submit">Take a guess!</button>
 
   </form>
 </body>
+</html>
